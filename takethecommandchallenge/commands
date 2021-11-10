@@ -1,0 +1,13 @@
+1. tail -n 5 access.log 
+
+	this prints the last 5 lines while head would print first 5
+
+2. ln -s { file destination } { link name }
+
+	ln is used for creating links -s means symbolic links
+	Symbolic links are like reference : ln -s three /proj/trials
+	cd three ========+> will cd to /proj/trials
+
+3. **/*.jpg means all files that end with .jpg
+
+

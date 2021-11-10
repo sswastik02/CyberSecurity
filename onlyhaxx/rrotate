@@ -1,0 +1,33 @@
+Opened up in ghidra ......... Noticed that rand function is used
+
+but srand argument is constant so in any machine it will produce the same pseudo random numbers from the mersene twister
+hence i produced the random number in c and made code in python
+
+a=[444454915,1502197874,436864165,770686807,1899516530,994794653,1552099820,1351221478,1547895242,1568662052,116124856,1982508163,159126658,1994372689,1898982037,197124815,193049009,710365140,1472749246,1939754299,203469645,1449577280,561696331,586204725,2129139399,509788394,661656564,1439714063,1591742749,493076509,2014719040,2036197664,1995274383,304099557,659400823,1747307266,1298894210,64016995,951045096,699305804,1632679047,1067169953,534330319,]
+s="Oea_Atk_Vywnm_RdymicG_N_Hty_O_Srmv_Bp_Pi_Dj"
+x=["","","","",""]
+sr=""
+for i in range(len(s)):
+    for q in range(5):    
+        if s[i] != '_':
+            try:
+                z=chr(q*26+ord(s[i])-(a[i]%99))
+                if(z.isupper() or z.islower()):
+                    x[q]+=z
+                    sr+=z
+            except:
+                print('error',end='')
+        else:
+            x[q]+='_'
+            sr+='_'
+for i in x:
+    print(i)
+
+print(sr)
+
+the s in the above code was encrypted with memfrob which xors each character with 42 hence found s from string search in ghidra and then xoring
+IcZtYs_____NhUoZt_____AubÊUoAuZt_____WqNhKeZthÐKeR_____Ic_____CwGaTn_____Ic_____HbaÉBvKe_____TnUo_____DxUo_____IcZt
+
+the variable sr is shown above 
+it has certain words which i took out manually
+Its_Not_About_Whether_................

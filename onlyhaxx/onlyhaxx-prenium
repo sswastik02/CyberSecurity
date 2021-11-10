@@ -1,0 +1,36 @@
+it involves using randcracktool and pwntools to automate taking 
+624 entries to the tool in order to predict the values later
+
+from pwn import *
+from randcrack import RandCrack
+rc=RandCrack()
+p=remote("35.226.73.105",5555)
+p.recv()
+p.sendline(b'sswastik02')
+for i in range(624):
+	p.recv()
+	p.sendline(b'1')
+	p.recv()
+	p.sendline(b'1')
+	p.recv()
+	p.sendline(b'2')
+	a=p.recvuntil(b'!').strip().decode('utf-8')
+	a=a[a.index(':')+2:]
+	a=a[:a.index('\n')]
+	a=int(a)
+	print(a,i)
+	rc.submit(a)
+
+for i in range(4):
+	p.recv()
+	a=rc.predict_randrange(0, 4294967295)
+	a=str(a)
+	a=a.encode('utf-8')
+	p.sendline(b'1')
+	p.recv()
+	p.sendline(a)
+	p.recv()
+	p.sendline(b'2')
+	a=p.recvuntil(b'won').strip().decode('utf-8')
+	print(a,i)
+p.interactive()

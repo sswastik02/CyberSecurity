@@ -1,0 +1,17 @@
+level 0: ssh leviathan.labs.overthewire.org -p 2223 -l leviathan0 
+password : leviathan0
+
+level 0-1:  ls -al => cd .backup => cat bookmarks.html | grep password => rioGegei8m
+
+level 1-2: 
+strace ./binary => this will give all system calls till the command exits 
+ltrace will give all the library calls for the binary simalar to strace
+
+ltrace ./check => strcmp(text,"sex") => therefore the passowrd is "sex"
+
+ls -al before this will show that it is a binary belonging to leviathan2 hence it can probably access the password
+
+cat /etc/leviathan_pass/leviathan2 => ougahZi8Ta
+
+level 2-3:
+

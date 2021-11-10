@@ -1,0 +1,68 @@
+1. Python: if x='7D' then int(i,16) will convert it to decimal from hexadecimal
+2. Python: Morse Code Dictionary
+		MORSE_CODE_DICT = { 'A':'.-', 'B':'-...',
+                    'C':'-.-.', 'D':'-..', 'E':'.',
+                    'F':'..-.', 'G':'--.', 'H':'....',
+                    'I':'..', 'J':'.---', 'K':'-.-',
+                    'L':'.-..', 'M':'--', 'N':'-.',
+                    'O':'---', 'P':'.--.', 'Q':'--.-',
+                    'R':'.-.', 'S':'...', 'T':'-',
+                    'U':'..-', 'V':'...-', 'W':'.--',
+                    'X':'-..-', 'Y':'-.--', 'Z':'--..',
+                    '1':'.----', '2':'..---', '3':'...--',
+                    '4':'....-', '5':'.....', '6':'-....',
+                    '7':'--...', '8':'---..', '9':'----.',
+                    '0':'-----', ', ':'--..--', '.':'.-.-.-',
+                    '?':'..--..', '/':'-..-.', '-':'-....-',
+                    '(':'-.--.', ')':'-.--.-'}
+
+3. Image: strings can be used to find hidden text in images
+4. base64 is the most common type of encoding
+5. Web : robots.txt of a website tell a robot where the robot is allowed to look or crawl and where not
+6. Image: foremost can be used to extract files from images
+7. Python: hex(),bin() are functions to convert between number systems
+8. Vignere's Cipher:
+		G E E K S F O R G E E K S
+		+ + + + + + + + + + + + +
+		A Y U S H A Y U S H A Y U
+		= = = = = = = = = = = = =
+		G C Y C Z F M L Y L E I M
+						Key : AYUSH
+						Phrase : GEEKSFORGEEKS
+	Encryption : (P[i] + K[i])%26
+	Decryption : (P[i] - K[i] + 26)%26 
+The above formulas will get in the range of 0-25 , you have to convert to ascii
+
+Use cyberchef for cryptography (online tool)
+
+9. Bacon Cipher : 
+	There are 2 types of cipher:
+	
+	A aaaaa 00000
+	B aaaab 00001
+	C aaaba 00010
+	|
+	|
+	|
+	I=J abaaa 01000                          I=J && U=V
+	|
+	|
+	|
+	U=V baaba 10011
+
+	The second type:
+	
+	A aaaaa 00000
+	|
+	|
+	|
+	I abaaa 01000
+	J abaab 01001				I!=J && U!=V
+	|
+	|
+	|
+	U babaa 10100
+	V babab 10101
+
+
+10. Image : exiftool can be used to inspect an image

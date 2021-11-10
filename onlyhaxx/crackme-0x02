@@ -1,0 +1,65 @@
+This function involved a binary to be reverse engineered (thorough knowledge of gdb is necessary for binaries)
+
+   local_198._0_4_ = 0x93;
+  local_198._4_4_ = 0x6d;
+  local_190 = 0x98;
+  local_18c = 0x62;
+  local_188 = 0x7e;
+  local_184 = 0x65;
+  local_180 = 0x49;
+  local_17c = 0x2c;
+  local_178 = 0x80;
+  local_174 = 0x39;
+  local_170 = 0x84;
+  local_16c = 0x2c;
+  local_168 = 0x8b;
+  local_164 = 0x36;
+  local_160 = 0x94;
+  local_15c = 0x65;
+  local_158 = 0x4c;
+  local_154 = 0x35;
+  local_150 = 0x4c;
+  local_14c = 0x77;
+  local_148 = 0x46;
+  local_144 = 0x35;
+  local_140 = 0x86;
+  local_13c = 0x39;
+  local_138 = 0x8b;
+  local_134 = 0x2c;
+  local_130 = 0x42;
+  local_12c = 0x6a;
+  local_128 = 0x4c;
+  local_124 = 0x6b;
+  local_120 = 0x8a;
+  local_11c = 0x32;
+  local_118 = 0x4c;
+  local_114 = 0x72;
+  local_110 = 0x45;
+  local_10c = 0x6b;
+  local_108 = 0x85;
+  local_104 = 0x2c;
+  local_100 = 0x85;
+  local_fc = 0x39;
+  local_f8 = 0x4c;
+  local_f4 = 0x6d;
+  local_f0 = 0x49;
+  local_ec = 0x34;
+  local_e8 = 0x94;
+  local_e4 = 0x7c;
+
+  the following till e4 is a part of an array cuz the first variable address is used somewhere in the binary 
+  notice they have hexadecimal difference of 4 
+  and according to stack it goes from higher address to lower address which is consistent with what we are seeing are
+
+  the first two lines mean =====> arr[0] , arr[1]
+
+  the above array is a string (this was an assumpiton)
+
+    local_1d4 = 0x1f;
+  local_1d0 = 0x21;
+  local_1cc = 7;
+
+  this is also an array but its an integer array more specefically long this is because local_1d4 address was used in r3v function which takes in
+  long variable and 2 int variables
+
+  with this you can find out that r3v just reverses the array by exchanging first and last elements of the array

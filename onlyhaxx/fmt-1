@@ -1,0 +1,21 @@
+The problem included entering 2 inputs ..... at first the name and then number to be guessed
+the number being generated was truly random and system dependent as /dev/urandom creates random number
+based on disk io or network fluctuations or something very unpredictable
+
+
+but however the urandom was fetched before input of name
+so in the name i entered
+
+%p %p %p %p %p %p %p                                7 times
+
+this is a format string exploit 
+
+i noticed that the stack was getting leaked but the first 2 values had 0 change
+the next 4 values were changing and then the next one was constant
+
+out of these 4 values the second one which means 4th one in the entire series
+was changing to extremes i assumed that to be the random number fetched 
+
+converted that to decimal and then passed that as the guess hence
+
+got the flag

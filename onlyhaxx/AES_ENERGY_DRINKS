@@ -1,0 +1,47 @@
+from pwn import *
+p=remote('35.226.73.105',4444)
+
+l=list(range(48,48+10))+list(range(65,65+26)) + [95] + list(range(97,97+26)) + [ord(i) for i in '@#$%^&*()-+=!{[}]:;?/|~`.,']
+b='flag{buzzing'
+p.recv()
+for i in range(3,-1,-1):
+    a='a'*i
+    c=''
+    p.sendline(b'2')
+    p.recv()
+    p.sendline(a.encode('utf-8'))
+    p.recvuntil(b'>')
+    h1=p.recvline().decode('utf-8').strip()
+    p.recv()
+    p.sendline(b'1')
+    p.recv()
+    p.sendline((a+b).encode('utf-8'))
+    p.recvuntil(b'>')
+    h2=p.recvline().decode('utf-8').strip()
+    p.recv()
+    for j in l:
+        if(not h1[:len(h2)] == h2):
+            c=chr(j)
+            p.sendline(b'1')
+            p.recv()
+            print(a+b+c)
+            p.sendline((a+b+c).encode('utf-8'))
+            p.recvuntil(b'>')
+            h2=p.recvline().decode('utf-8').strip()
+            p.recv()
+        else:
+            b=b+c
+            break
+flag{buzzinga!!}
+
+to hack the coupon code ..... 
+
+enter option 2 with 15 a
+enter option 1 with 15 a + f
+
+you will see its the half of option 2
+cuz option2 is 15 a + first letter of flag + rest of the flag
+
+first letter of flag = f
+
+so like this go to the point where no. of a is zero

