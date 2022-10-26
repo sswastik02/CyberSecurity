@@ -1,0 +1,6 @@
+This challenge had a name consisting robot
+
+so i went to url + "/robots.txt"
+found a disallow page 
+
+navigated to disallow page to find the flag

